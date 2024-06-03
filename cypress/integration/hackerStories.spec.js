@@ -3,7 +3,14 @@ describe('Hacker Stories', () => {
     cy.visit('/')
 
     cy.assertLoadingIsShownAndHidden()
-    cy.contains('More').should('be.visible')
+    cy.intercept({
+      method: 'GET',
+      pathname:'**/search?query=React&page=0',
+      QUERY:{
+        query: 'React',
+        page: 0
+      }
+    }).as('getStories')
   })
 
   it('shows the footer', () => {
